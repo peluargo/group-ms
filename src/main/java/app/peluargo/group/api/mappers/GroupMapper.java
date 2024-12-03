@@ -1,8 +1,9 @@
-package app.peluargo.group.api;
+package app.peluargo.group.api.mappers;
 
-import app.peluargo.group.api.dtos.GroupCreationDTO;
-import app.peluargo.group.api.dtos.GroupDTO;
-import app.peluargo.group.api.dtos.GroupUpdateDTO;
+import app.peluargo.group.api.dtos.*;
+import app.peluargo.group.api.entities.Group;
+
+import java.util.List;
 
 public class GroupMapper {
     public static Group toGroup(GroupCreationDTO groupCreationDTO) {
@@ -26,7 +27,22 @@ public class GroupMapper {
                 group.getId(),
                 group.getName(),
                 group.getDescription(),
-                group.getCreatedBy()
+                group.getQuantityOfMembers()
+        );
+    }
+
+    public static GroupDetailsDTO toGroupDetailsDTO(
+            Group group,
+            List<UserDetailsDTO> members,
+            UserDetailsDTO creator
+    ) {
+        return new GroupDetailsDTO(
+                group.getId(),
+                group.getName(),
+                group.getDescription(),
+                group.getQuantityOfMembers(),
+                members,
+                creator
         );
     }
 }

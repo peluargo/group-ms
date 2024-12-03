@@ -1,4 +1,4 @@
-package app.peluargo.group.api.dtos;
+package app.peluargo.group.api.commons.dtos;
 
 import lombok.Data;
 

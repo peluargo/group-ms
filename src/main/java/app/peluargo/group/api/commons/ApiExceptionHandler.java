@@ -1,6 +1,6 @@
-package app.peluargo.group.api;
+package app.peluargo.group.api.commons;
 
-import app.peluargo.group.api.dtos.ApiErrorResponseDTO;
+import app.peluargo.group.api.commons.dtos.ApiErrorResponseDTO;
 import app.peluargo.group.api.exceptions.GroupNotFoundException;
 import app.peluargo.group.api.exceptions.InvalidUserIdException;
 import org.springframework.http.HttpStatus;

@@ -1,5 +1,7 @@
-package app.peluargo.group.api;
+package app.peluargo.group.api.controllers;
 
+import app.peluargo.group.api.dtos.GroupDetailsDTO;
+import app.peluargo.group.api.services.GroupService;
 import app.peluargo.group.api.dtos.GroupCreationDTO;
 import app.peluargo.group.api.dtos.GroupDTO;
 import app.peluargo.group.api.dtos.GroupUpdateDTO;
@@ -33,9 +35,9 @@ public class GroupController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GroupDTO> searchOne(@PathVariable("id") UUID id) {
-        GroupDTO groupDTO = this.groupService.searchOne(id);
-        return ResponseEntity.ok(groupDTO);
+    public ResponseEntity<GroupDetailsDTO> searchOne(@PathVariable("id") UUID id) {
+        GroupDetailsDTO groupDetailsDTO = this.groupService.searchOne(id);
+        return ResponseEntity.ok(groupDetailsDTO);
     }
 
     @Transactional

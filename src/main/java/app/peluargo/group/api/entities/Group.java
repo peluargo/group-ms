@@ -1,8 +1,9 @@
-package app.peluargo.group.api;
+package app.peluargo.group.api.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -24,4 +25,17 @@ public class Group {
 
     @Column(nullable = false, updatable = false)
     private UUID createdBy;
+
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Member> members;
+
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Role> roles;
+
+    @Transient
+    private int quantityOfMembers;
+
+    public int getQuantityOfMembers() {
+        return this.members.size();
+    }
 }
