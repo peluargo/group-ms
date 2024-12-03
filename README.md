@@ -17,6 +17,12 @@ The Group Microservice communicates with the User Microservice by making HTTP re
 ##
 
 ### Features
+ - [x] Create groups
+ - [x] Add members to group
+ - [ ] Create group roles
+ - [ ] Manage member roles
 
- - [ ] https://github.com/peluargo/group-ms/issues/1
- - [ ] https://github.com/peluargo/group-ms/issues/2
+### Future ideas
+- [ ] Create group categories
+- [ ] Create role categories
+- [ ] Enable roles to be used across different groups
