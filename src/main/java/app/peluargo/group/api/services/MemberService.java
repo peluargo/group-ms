@@ -11,6 +11,8 @@ import app.peluargo.group.api.mappers.RoleMapper;
 import app.peluargo.group.api.repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -25,14 +27,20 @@ public class MemberService {
     @Autowired
     private UserMSClient userMSClient;
 
-    public MemberDTO create(MemberCreationDTO memberCreationDTO) {
-        if (this.isUserIdInvalid(memberCreationDTO.userId())) {
+    public MemberDTO createSingleMember(UUID groupId, UUID userId) {
+        if (this.userIdIsInvalid(userId)) {
             throw new InvalidUserIdException("User does not exist");
         }
 
-        Member member = this.memberRepository.save(MemberMapper.toMember(memberCreationDTO));
+        if (this.)
+
+        Member member = this.memberRepository.save(Member.builder().id(userId).group().build());
 
         return MemberMapper.toMemberDTO(member);
+    }
+
+    public List<MemberDTO> createMultipleMembers(UUID groupId, MemberCreationDTO memberCreationDTO) {
+        return memberCreationDTO.memberIdList().stream().map(userId -> this.createSingleMember(groupId, userId)).toList();
     }
 
     public MemberWithUserDetailsDTO searchOne(UUID groupId, UUID memberId) {
@@ -59,14 +67,16 @@ public class MemberService {
         this.memberRepository.deleteById(id);
     }
 
-    public boolean isUserIdInvalid(UUID id) {
+    public boolean userIdIsInvalid(UUID id) {
         return this.getUserDetails(id) == null;
     }
 
     public UserDetailsDTO getUserDetails(UUID id) {
         ResponseEntity<UserDetailsDTO> response = this.userMSClient.searchOneUser(id);
 
-        if (response.getStatusCode().isError()) {
+        if (HttpStatus.NOT_FOUND.value() == response.getStatusCode().value()) {
+            throw new RuntimeException("Something went wrong while fetching for member details");
+        } else if (response.getStatusCode().isError()) {
             throw new RuntimeException("Something went wrong while fetching for member details");
         }
 

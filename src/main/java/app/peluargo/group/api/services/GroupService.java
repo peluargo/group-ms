@@ -24,7 +24,7 @@ public class GroupService {
     private MemberService memberService;
 
     public GroupDTO create(GroupCreationDTO groupCreationDTO) {
-        if (this.memberService.isUserIdInvalid(groupCreationDTO.createdBy())) {
+        if (this.memberService.userIdIsInvalid(groupCreationDTO.createdBy())) {
             throw new InvalidUserIdException("Creator is not a valid user");
         }
 
@@ -42,17 +42,19 @@ public class GroupService {
 
         // in order to get the detailed information about the members, we will need to create a new request to the
         // user microservice passing all the members ids as a list
-        List<UUID> ids = new ArrayList<>(group.getMembers().stream().map(
+        List<UUID> membersIdList = new ArrayList<>(group.getMembers().stream().map(
                 member -> member.getId().getUserId()).toList()
         );
 
-        // we add the creator id to the list so we can use the same request to fetch his information as well,
-        // otherwise we would need to do another request just for him
+        // since we will be searching for the details of all the group members AND group creator, we need to verify
+        // if the creator is also a member of the group, so we can fetch his information using the same request
         UUID creatorId = group.getCreatedBy();
-        ids.add(creatorId);
+        if (!membersIdList.contains(creatorId)) {
+            membersIdList.add(creatorId);
+        }
 
         // now we call the user microservice passing the id list
-        Page<UserDetailsDTO> pageOfMembers = this.memberService.getUserDetailsList(ids);
+        Page<UserDetailsDTO> pageOfMembers = this.memberService.getUserDetailsList(membersIdList);
 
         List<UserDetailsDTO> members = pageOfMembers.getContent();
 
@@ -63,7 +65,8 @@ public class GroupService {
                 .findFirst()
                 .orElseThrow();
 
-        // since the same request was used now we need to remove the creator from the members list if he is not a member
+        // since the same request was used to retrieve both members and creator details now we need to remove the
+        // creator from the members list if he is not a member
         members = members.stream().filter(member -> !creatorId.equals(member.id())).toList();
 
         return GroupMapper.toGroupDetailsDTO(group, members, creator);
