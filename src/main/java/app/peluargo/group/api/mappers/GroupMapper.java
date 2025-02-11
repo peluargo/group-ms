@@ -1,7 +1,7 @@
 package app.peluargo.group.api.mappers;
 
 import app.peluargo.group.api.dtos.*;
-import app.peluargo.group.api.entities.Group;
+import app.peluargo.group.api.models.Group;
 
 import java.util.List;
 

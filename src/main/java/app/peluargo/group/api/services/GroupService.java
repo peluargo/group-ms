@@ -1,7 +1,7 @@
 package app.peluargo.group.api.services;
 
 import app.peluargo.group.api.dtos.*;
-import app.peluargo.group.api.entities.Group;
+import app.peluargo.group.api.models.Group;
 import app.peluargo.group.api.exceptions.GroupNotFoundException;
 import app.peluargo.group.api.exceptions.InvalidUserIdException;
 import app.peluargo.group.api.mappers.GroupMapper;

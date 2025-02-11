@@ -1,8 +1,8 @@
 package app.peluargo.group.api.mappers;
 
 import app.peluargo.group.api.dtos.*;
-import app.peluargo.group.api.entities.Member;
-import app.peluargo.group.api.entities.MemberId;
+import app.peluargo.group.api.models.Member;
+import app.peluargo.group.api.models.MemberId;
 
 import java.util.UUID;
 import java.util.stream.Collectors;

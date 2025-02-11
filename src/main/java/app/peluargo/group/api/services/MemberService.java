@@ -2,7 +2,7 @@ package app.peluargo.group.api.services;
 
 import app.peluargo.group.api.clients.dtos.GetAllGroupMemberDetailsRequestDTO;
 import app.peluargo.group.api.dtos.*;
-import app.peluargo.group.api.entities.Member;
+import app.peluargo.group.api.models.Member;
 import app.peluargo.group.api.exceptions.GroupNotFoundException;
 import app.peluargo.group.api.exceptions.InvalidUserIdException;
 import app.peluargo.group.api.clients.UserMSClient;
@@ -12,7 +12,6 @@ import app.peluargo.group.api.repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,7 @@ public class MemberService {
             throw new InvalidUserIdException("User does not exist");
         }
 
-        if (this.)
+//        if (this.)
 
         Member member = this.memberRepository.save(Member.builder().id(userId).group().build());
 

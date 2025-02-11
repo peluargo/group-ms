@@ -1,4 +1,4 @@
-package app.peluargo.group.api.entities;
+package app.peluargo.group.api.models;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
